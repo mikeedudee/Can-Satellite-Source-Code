@@ -6,5 +6,7 @@ void THERMISTOR_CORE() {
     float               Rfixed      = THERMISTOR_R0;  // 10 kΩ
     float               Rtherm      = Rfixed * Vtherm / (VREF - Vtherm);
     float               invT        = (1.0f / THERMISTOR_TEMP_INIT) + (log(Rtherm / THERMISTOR_R0) / THERMISTOR_BETA);
+    
     Temperature_Therm = (1.0f / invT - 273.15f) + 25;
 }
+
