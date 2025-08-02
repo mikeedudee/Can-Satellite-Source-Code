@@ -51,12 +51,11 @@ sh2_SensorValue_t       sensorValue;
     }
   }
 
-// DECLARTION OF CLASSES TO VARIABLES
+// DECLARATION OF CLASSES TO VARIABLES
 SdFs                  sd;
 FsFile                file;
 MS5611                ms5611;
 TinyGPSPlus           gps;
-//SDCardLogger          logger;
 
 // PIN ASSIGNMENTS
 // LED_BUILTIN: Teensy micro-controller LED
@@ -65,7 +64,7 @@ TinyGPSPlus           gps;
 // Pin 25: LED 2 [Lower Layer LED]
 // Pin 26: LED 3 [Lower Layer LED]
 // Pin 38: LED 4 [Main Board LED]
-static constexpr int      OUTPUT_PINS[]     = { LED_BUILTIN, 23, 24, 25, 26, 38 };                                                                                      // Array of deployment pins for charges
+static constexpr int      OUTPUT_PINS[]     = { LED_BUILTIN, 23, 24, 25, 26, 38 };         // Array of deployment pins for charges
 static constexpr size_t   NUM_OUTPUT_PINS   = sizeof(OUTPUT_PINS)/sizeof(OUTPUT_PINS[0]);  // Size of deployment and output pins for the loop
 
 void setup() {
@@ -76,9 +75,7 @@ void setup() {
     analogReadResolution(12);
 
     for (size_t i = 0; i < NUM_OUTPUT_PINS; i++) {
-        pinMode(OUTPUT_PINS[i], OUTPUT);
-        digitalWrite(OUTPUT_PINS[0], 1); // Turn On BuiltIn LED
-        //digitalWrite(OUTPUT_PINS[i], 0);
+        pinMode(OUTPUT_PINS[i], OUTPUT); digitalWrite(OUTPUT_PINS[0], 1); // Turn On BuiltIn LED
     }
 
     SDCard_Setup();
@@ -96,6 +93,7 @@ void setup() {
 void loop() {
   present = millis();
   digitalWrite(OUTPUT_PINS[1], LOW);
+  
 // CALL THE SENSORS
     MS5611_CORE();
     IMU_CORE();
@@ -112,8 +110,6 @@ void loop() {
 
 void doTelemetry() {
     
-    
-
     Time_Elapsed      = millis() / 1000;
     Vertical_Velocity = ms5611.getVelocity(Altitude_Filtered, present);
 
@@ -136,29 +132,7 @@ void doTelemetry() {
         Vertical_Velocity,
         absoluteAltitude
     );
+  
     print_data(buffer);
     saveData(buffer);
-
-    // double dataArray[] = {
-    //     realPressure,
-    //     Altitude_Filtered,
-    //     realTemperature, 
-    //     Temperature_Therm,
-    //     GPS_Latitude,
-    //     GPS_Longitude,
-    //     SDCard_Status,
-    //     Time_Elapsed,
-    //     sensorStatusValue,
-    //     Yaw_Output,
-    //     Pitch_Output,
-    //     Roll_Output,
-    //     Vertical_Velocity,
-    //     absoluteAltitude
-    // };
-
-    // for (int i = 0; i < sizeof(dataArray) / sizeof(dataArray[0]); ++i) {
-    //     saveData(dataArray[i]);
-    // }
-    // Saving to Flash Memory
-    
 }
