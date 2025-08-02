@@ -6,12 +6,12 @@ void MS5611_Init() {
 }
 
 void MS5611_CORE() {
-    uint32_t rawTemperature = ms5611.readRawTemperature();
-    uint32_t rawPressure    = ms5611.readRawPressure();
-    realTemperature         = ms5611.readTemperature();
-    realPressure            = ms5611.readPressure();
-    absoluteAltitude        = ms5611.getAltitude(realPressure);
-    relativeAltitude        = ms5611.getAltitude(realPressure, referencePressure);
-    Altitude_Filtered       = ms5611.kalmanFilter(relativeAltitude);
+    uint32_t    rawTemperature      = ms5611.readRawTemperature();
+    uint32_t    rawPressure         = ms5611.readRawPressure();
+                realTemperature     = ms5611.readTemperature();
+                realPressure        = ms5611.readPressure();
+                absoluteAltitude    = ms5611.getAltitude(realPressure);
+                relativeAltitude    = ms5611.getAltitude(realPressure, referencePressure);
+                Altitude_Filtered   = ms5611.kalmanFilter(relativeAltitude);
   
 }
